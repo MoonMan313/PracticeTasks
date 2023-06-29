@@ -10,9 +10,14 @@ import java.util.Set;
 public class AppNames {
     public static void main(String[] args) {
         HashMap<String, Integer> namesMap = new HashMap<>();
+        fillInNamesMap(namesMap);
 
-        AppNames app = new AppNames();
-        app.fillInNamesMap(namesMap);
+        System.out.println("""
+                        Меню:
+                        1 - вывести результаты подсчета
+                        2 - вывести популярное имя
+                        3 - вывести редкое имя
+                        0 - выйти из программы""");
 
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
@@ -22,12 +27,6 @@ public class AppNames {
                 case "1" -> showAllNames(namesMap);
                 case "2" -> popularName(namesMap);
                 case "3" -> rareName(namesMap);
-                default -> System.out.println("""
-                        Меню:
-                        1 - вывести результаты подсчета
-                        2 - вывести популярное имя
-                        3 - вывести редкое имя
-                        0 - выйти из программы""");
             }
             command = scanner.nextLine();
         }
@@ -38,7 +37,7 @@ public class AppNames {
      */
     private static void showAllNames(HashMap<String, Integer> namesMap) {
         for (HashMap.Entry<String, Integer> entry : namesMap.entrySet())
-            System.out.println(entry);
+            System.out.println(entry.getKey() + " - количество повторений: " + entry.getValue());
     }
 
     /**
@@ -69,7 +68,7 @@ public class AppNames {
 
         for (String key : names) {
             if (namesMap.get(key).equals(value))
-                System.out.println(key + " - " + value + " повторений");
+                System.out.println(key + " - количество повторений: " + value);
         }
     }
 
@@ -77,9 +76,9 @@ public class AppNames {
     /**
      * заполняем names, где key - имя, value - кол-во повторений
      */
-    private void fillInNamesMap(HashMap<String, Integer> names) {
+    private static void fillInNamesMap(HashMap<String, Integer> names) {
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
+            ClassLoader classLoader = AppNames.class.getClassLoader();
             URL resource = classLoader.getResource("names.txt");
             Scanner scanner = new Scanner(new File(resource.getFile()));
 
