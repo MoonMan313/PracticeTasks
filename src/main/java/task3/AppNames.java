@@ -9,8 +9,7 @@ import java.util.Set;
 
 public class AppNames {
     public static void main(String[] args) {
-        HashMap<String, Integer> namesMap = new HashMap<>();
-        fillInNamesMap(namesMap);
+        HashMap<String, Integer> namesMap = fillInNamesMap("names.txt");
 
         System.out.println("""
                         Меню:
@@ -76,20 +75,24 @@ public class AppNames {
     /**
      * заполняем names, где key - имя, value - кол-во повторений
      */
-    private static void fillInNamesMap(HashMap<String, Integer> names) {
+    private static HashMap<String, Integer> fillInNamesMap(String pathFile) {
+        HashMap<String, Integer> namesMap = new HashMap<>();
+
         try {
             ClassLoader classLoader = AppNames.class.getClassLoader();
-            URL resource = classLoader.getResource("names.txt");
+            URL resource = classLoader.getResource(pathFile);
             Scanner scanner = new Scanner(new File(resource.getFile()));
 
             while (scanner.hasNextLine()) {
                 String scannerName = scanner.nextLine();
-                names.put(scannerName, !names.containsKey(scannerName) ? 1 : (names.get(scannerName) + 1));
+                namesMap.put(scannerName, !namesMap.containsKey(scannerName) ? 1 : (namesMap.get(scannerName) + 1));
             }
 
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        return namesMap;
     }
 }
