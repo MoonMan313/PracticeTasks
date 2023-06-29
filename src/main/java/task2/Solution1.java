@@ -1,10 +1,10 @@
-package task2;
+package main.java.task2;
 
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-public class Main {
+public class Solution1 {
     public static void main(String[] args) {
 
         /** creating input data */
